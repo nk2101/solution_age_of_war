@@ -1,0 +1,70 @@
+  function test(own, opp, arr) {
+    const ownClass = own.type;
+    const opponentClass = opp.type;
+
+    if (isAdvatange(ownClass, opponentClass, arr)) {
+        if (own.num * 2 > opp.num) return "win";
+        else if (own.num * 2 === opp.num) return "draw";
+        else return "loss";
+    }
+    if (own.num > opp.num) return "win";
+    else if (own.num === opp.num) return "draw";
+    else return "loss";
+}
+
+  function isAdvatange(ownClass , opponentClass, arr) {
+    return arr[ownClass]?.includes(opponentClass);
+  }
+
+  const funCall = () => {
+    let ownPlatoon =
+      "Spearmen#10;Militia#30;FootArcher#20;LightCavalry#1000;HeavyCavalry#120";
+    let oppPlatoon =
+      "Militia#10;Spearmen#10;FootArcher#1000;LightCavalry#120;CavalryArcher#100";
+
+    let arr = {
+      Militia: ["Spearmen", "LightCavalry"],
+      Spearmen: ["LightCavalry", "HeavyCavalry"],
+      LightCavalry: ["FootArcher", "CavalryArcher"],
+      HeavyCavalry: ["Militia", "FootArcher", "LightCavalry"],
+      CavalryArcher: ["Spearmen", "HeavyCavalry"],
+      FootArcher: ["Militia", "CavalryArcher"],
+    };
+    let wins = 0;
+    let arrangement= [];
+
+    let data = ownPlatoon.split(";").map((item) => {
+      const [type, num] = item.split("#");
+      return {
+        type,
+        num,
+      };
+    });
+
+    let data2 = oppPlatoon.split(";").map((item) => {
+      const [type, num] = item.split("#");
+      return {
+        type,
+        num,
+      };
+    });
+
+    for (let i = 0; i < 5; i++) {
+      const own = data[i];
+      const opp= data2[i];
+
+      const ownClass= own.type;
+      const opponentClass = opp.type;
+
+      const result = test(own, opp, arr);
+
+      arrangement.push(`${own.type}#${opp.num}`);
+      if (result === "win") {
+        wins++;
+      }
+    }
+    console.log(arrangement.toString())
+  };
+  
+  
+  funCall();
